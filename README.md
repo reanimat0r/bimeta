@@ -108,3 +108,84 @@ optional arguments:
   --noverify            Accept unverifiable certificates
   --json                Return results as json
 ```
+
+# Common Tasks
+
+This section features a walkthrough of common bimeta tasks.
+
+## Adding a user
+
+Step 1 - ask for help:
+```
+$ bimeta put user --help
+Submit users.  Format: name,title,affiliation,email,clearance,comm,tech,exe
+```
+
+Recall that bimeta reads from STDIN and writes to STDOUT. Knowing that, we simply need to provide the required information in the required format on stdin.
+
+```
+$ echo "jane doe,intel analyst,someorg,jane.doe@someorg.org,amber,true,true,false" | bimeta put user
+```
+
+## Remove a user
+
+Ask for help:
+
+```
+$ bimeta delete user --help
+usage: bimeta del user [-h] email
+
+positional arguments:
+  email       user email
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+Delete the user:
+
+```
+$ bimeta delete user jane.doe@someorg.org
+```
+
+## Retrieve the badpanda configuration file
+
+Ask for help:
+
+```
+bimeta get config --help
+usage: bimeta get config [-h] --affiliation AFFILIATION --name NAME
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --affiliation AFFILIATION
+                        ...matching specified org
+  --name NAME           ...matching specified name
+```
+
+Retrieve the badpanda.config file for org someorg:
+
+```
+bimeta get config --name badpanda.config --affiliation someorg
+```
+
+## Upload the badpanda configuration file
+
+Ask for help:
+
+```
+bimeta put config --help
+usage: bimeta put config [-h] [--affiliation AFFILIATION] --name NAME
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --affiliation AFFILIATION
+                        ...for provided affiliation
+  --name NAME           ...save as provided name
+```
+
+Upload the bapanda configuration file for org someorg:
+
+```
+cat mybadpanda.config | bimeta put config --name badpanda.config --affiliation someorg
+```
